@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+use App\Commands\ChatGptCommand;
+use Symfony\Component\Console\Application;
+
+$app = new Application();
+$app->add(new ChatGptCommand());
+
+
+
+
+
+try {
+    $app->run();
+} catch (Throwable $th) {
+}
