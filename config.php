@@ -6,4 +6,5 @@ $dotenv->load();
 return [
     'openai_api' => $_ENV['API_URL'],
     'gpt_question' => 'You: ',
+    'todo_file' => __DIR__ . '/todo.txt',
 ];

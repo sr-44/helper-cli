@@ -1,18 +1,15 @@
 #!/usr/bin/env php
-
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Commands\ChatGptCommand;
+use App\Commands\TodoCommand;
 use Symfony\Component\Console\Application;
 
 $app = new Application();
 $app->add(new ChatGptCommand());
-
-
-
-
+$app->add(new TodoCommand());
 
 try {
     $app->run();
