@@ -16,7 +16,8 @@ class TodoCommand extends Command
         $this->setName('todo')
             ->setDescription('List all of the tasks on your todo list.')
             ->addArgument('add', InputArgument::OPTIONAL, 'Add a new task to the list.')
-            ->addArgument('check', InputArgument::OPTIONAL, 'Check a task off the list.');
+            ->addArgument('check', InputArgument::OPTIONAL, 'Check a task off the list.')
+            ->addArgument('count', InputArgument::OPTIONAL, 'Count of task');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -61,6 +62,10 @@ class TodoCommand extends Command
                     $output->writeln('<error>' . $e->getMessage() . '</>');
                     return Command::FAILURE;
                 }
+                break;
+            case 'count':
+                $count = count(file(config('todo_file')));
+                $output->writeln($count);
                 break;
             default:
                 $output->writeln('<error>Unknown command</>');
