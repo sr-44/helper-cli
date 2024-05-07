@@ -3,10 +3,12 @@
 namespace App\Commands;
 
 use App\Helpers\Curl;
-use Exception;
+use JsonException;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 class ChatGptCommand extends Command
 {
@@ -30,11 +32,15 @@ class ChatGptCommand extends Command
             $data = ['data' => ['message' => $text]];
             try {
                 $response = $curl->postJson($url, $data);
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $output->writeln($e->getMessage());
-                break;
+                return Command::FAILURE;
             }
-            $response = json_decode($response);
+            try {
+                $response = json_decode($response, false, 512, JSON_THROW_ON_ERROR);
+            } catch (JsonException) {
+                throw new RuntimeException('Failed to decode JSON response');
+            }
             $output->writeln($response->result->choices[0]->text);
         }
         return Command::SUCCESS;

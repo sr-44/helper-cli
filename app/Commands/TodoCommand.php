@@ -3,6 +3,7 @@
 namespace App\Commands;
 
 use Exception;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Input\InputArgument;
@@ -89,7 +90,7 @@ class TodoCommand extends Command
             unset($tasks[$taskNumber - 1]);
             file_put_contents(config('todo_file'), implode(PHP_EOL, $tasks));
         } else {
-            throw new Exception('Task not found');
+            throw new RuntimeException('Task not found');
         }
     }
 

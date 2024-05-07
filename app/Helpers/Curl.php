@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use CurlHandle;
 use Exception;
+use RuntimeException;
 
 class Curl
 {
@@ -28,11 +29,14 @@ class Curl
         return $this->exec();
     }
 
-    public function postJson($url, $data)
+    /**
+     * @throws Exception
+     */
+    public function postJson($url, $data): bool|string
     {
         curl_setopt($this->curl, CURLOPT_URL, $url);
         curl_setopt($this->curl, CURLOPT_POST, true);
-        curl_setopt($this->curl, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($this->curl, CURLOPT_POSTFIELDS, json_encode($data, JSON_THROW_ON_ERROR));
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
         ]);
@@ -56,9 +60,9 @@ class Curl
     private function exec(): bool|string
     {
         $response = curl_exec($this->curl);
-        $error = curl_error($this->curl);
+        $error = curl_errno($this->curl);
         if ($error) {
-            throw new Exception($error);
+            throw new RuntimeException(curl_error($this->curl));
         }
         return $response;
     }
