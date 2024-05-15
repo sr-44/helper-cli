@@ -4,13 +4,18 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Commands\ChatGptCommand;
+use App\Commands\SyncNotes\EncryptAndPushNotesCommand;
+use App\Commands\SyncNotes\PullAndDecryptNotesCommand;
 use App\Commands\TodoCommand;
 use Symfony\Component\Console\Application;
 
+
 $app = new Application();
+
 $app->add(new ChatGptCommand());
 $app->add(new TodoCommand());
-
+$app->add(new EncryptAndPushNotesCommand());
+$app->add(new PullAndDecryptNotesCommand());
 try {
     $app->run();
 } catch (Throwable $th) {
