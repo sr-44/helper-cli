@@ -40,7 +40,7 @@ final class PullAndDecryptNotesCommand extends BaseSyncCommand
         foreach ($progressBar->iterate($filesToDecrypt) as $fileToDecrypt) {
             $progressBar->setMessage('<info>Decrypting file ' . $fileToDecrypt . '</info>', 'status');
             $extractedFilePath = explode($this->getEncryptedNotesPath(), $fileToDecrypt)[1];
-            $this->gpg->decryptFile($fileToDecrypt, $this->getDecryptedNotesPath() . $extractedFilePath);
+            $this->cipher->decryptFile($fileToDecrypt, $this->getDecryptedNotesPath() . $extractedFilePath);
         }
         $progressBar->clear();
     }
