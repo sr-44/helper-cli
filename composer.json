@@ -1,20 +1,20 @@
 {
-    "require": {
-        "symfony/console": "^7.0",
-        "vlucas/phpdotenv": "^5.6",
-        "ext-curl": "*",
-      "ext-gnupg": "*"
-    }
-  ,
+  "require": {
+    "symfony/console": "^7.0",
+    "vlucas/phpdotenv": "^5.6",
+    "ext-curl": "*",
+    "ext-openssl": "*",
+    "defuse/php-encryption": "^2.4"
+  },
   "require-dev": {
     "roave/security-advisories": "dev-latest"
   },
-    "autoload": {
-        "psr-4": {
-            "App\\": "app"
-        },
-        "files": [
-          "app/Helpers/functions.php"
-        ]
-    }
+  "autoload": {
+    "psr-4": {
+      "App\\": "app"
+    },
+    "files": [
+      "app/Helpers/functions.php"
+    ]
+  }
 }

@@ -44,7 +44,7 @@ final class EncryptAndPushNotesCommand extends BaseSyncCommand
         foreach ($progressBar->iterate($filesToEncrypt) as $fileToEncrypt) {
             $progressBar->setMessage('<info>Encrypting file ' . $fileToEncrypt . '</info>', 'status');
             $extractedFilePath = explode($this->getDecryptedNotesPath(), $fileToEncrypt)[1];
-            $this->gpg->encryptFile($fileToEncrypt, $this->getEncryptedNotesPath() . $extractedFilePath);
+            $this->cipher->encryptFile($fileToEncrypt, $this->getEncryptedNotesPath() . $extractedFilePath);
         }
         $progressBar->clear();
     }
@@ -64,7 +64,7 @@ final class EncryptAndPushNotesCommand extends BaseSyncCommand
                 $encryptedFile
             )[1];
             $temporaryDecryptedFilePath = $this->getTmpPath() . $encryptedFilePathFromEncryptedNotesPath;
-            $this->gpg->decryptFile($encryptedFile, $temporaryDecryptedFilePath);
+            $this->cipher->decryptFile($encryptedFile, $temporaryDecryptedFilePath);
         }
         $progressBar->clear();
     }

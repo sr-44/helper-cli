@@ -9,7 +9,7 @@ final class ScanDirs
     public function list_dir(string $path = './', array $ignore_names = []): object
     {
         $paths = ['dirs' => [], 'files' => []];
-        $ignore = config('gpg')['files_for_ignore'];
+        $ignore = config('sync_notes')['files_for_ignore'];
         if (!empty($ignore_names)) {
             $ignore = array_merge($ignore, $ignore_names);
         }

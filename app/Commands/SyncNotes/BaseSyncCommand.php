@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace App\Commands\SyncNotes;
 
-use App\Services\GPG;
+use App\Contracts\CipherInterface;
+use App\Services\Openssl;
 use App\Services\ScanDirs;
 use Symfony\Component\Console\Command\Command;
 
 abstract class BaseSyncCommand extends Command
 {
     protected ScanDirs $scanDirs;
-    protected GPG $gpg;
+    protected CipherInterface $cipher;
 
-    public function __construct(
-    ) {
+    public function __construct()
+    {
         parent::__construct();
-        $this->gpg = new GPG();
+        $this->cipher = new Openssl();
         $this->scanDirs = new ScanDirs();
-
     }
 
     protected function getEncryptedNotesPath(): string
     {
-        return config('gpg')['encrypted_notes_path'];
+        return config('sync_notes')['encrypted_notes_path'];
     }
 
     protected function getDecryptedNotesPath(): string
     {
-        return config('gpg')['decrypted_notes_path'];
+        return config('sync_notes')['decrypted_notes_path'];
     }
 
     protected function scanEncryptedFilesRecursive(): array
@@ -48,7 +48,7 @@ abstract class BaseSyncCommand extends Command
 
     protected function getTmpPath(): string
     {
-        return config('gpg')['tmp_path'];
+        return config('sync_notes')['tmp_path'];
     }
 
     protected function getRepoPath(): string

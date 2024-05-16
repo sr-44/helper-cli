@@ -12,6 +12,12 @@ return [
         'private_key' => __DIR__ . '/' . $_ENV['PRIVATE_KEY'],
         'passphrase' => $_ENV['PASSPHRASE'],
         'fingerprint' => $_ENV['FINGERPRINT'],
+    ],
+    'openssl' => [
+        'key_path' => $_ENV['OPENSSL_KEY_PATH'],
+        'algorithm' => $_ENV['OPENSSL_ALGORITHM'],
+    ],
+    'sync_notes' => [
         'encrypted_notes_path' => $_ENV['ENCRYPTED_NOTES_PATH'],
         'decrypted_notes_path' => $_ENV['DECRYPTED_NOTES_PATH'],
         'tmp_path' => $_ENV['TMP_PATH'],

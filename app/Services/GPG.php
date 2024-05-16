@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Contracts\CipherInterface;
 use gnupg;
 
-final class GPG
+final class GPG implements CipherInterface
 {
     private gnupg $gpg;
 
