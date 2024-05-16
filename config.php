@@ -25,6 +25,7 @@ return [
             '.',
             '..',
             '.git',
+            '.obsidian',
             'vendor',
         ],
     ],
