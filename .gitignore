@@ -3,3 +3,5 @@
 .env
 composer.lock
 todo.txt
+.public.key
+.defuse_key

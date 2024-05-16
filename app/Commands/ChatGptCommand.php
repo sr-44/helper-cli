@@ -2,7 +2,7 @@
 
 namespace App\Commands;
 
-use App\Helpers\Curl;
+use App\Services\Curl;
 use JsonException;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;

@@ -7,13 +7,13 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Command\Command;
 
 if (!function_exists('config')) {
-    function config($key)
+    function config($key): mixed
     {
-        $config = require __DIR__ . '/../../config.php';
-        if (isset($config[$key])) {
-            return $config[$key];
+        static $config;
+        if (!$config) {
+            $config = require __DIR__ . '/../../config.php';
         }
-        return null;
+        return $config[$key] ?? null;
     }
 }
 
@@ -24,4 +24,13 @@ if (!function_exists('ask')) {
         $question = new Question($question);
         return $helper->ask($input, $output, $question);
     }
+}
+
+function force_file_put_contents(string $pathWithFileName, mixed $data, int $flags = 0): false|int
+{
+    $dirPathOnly = dirname($pathWithFileName);
+    if (!file_exists($dirPathOnly)) {
+        mkdir($dirPathOnly, 0775, true);
+    }
+    return file_put_contents($pathWithFileName, $data, $flags);
 }
