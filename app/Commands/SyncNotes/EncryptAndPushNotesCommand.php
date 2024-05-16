@@ -38,8 +38,11 @@ final class EncryptAndPushNotesCommand extends BaseSyncCommand
 
     private function encryptFilesWithLog(): void
     {
-        $progressBar = (new ProgressBarBuilder($this->output))->build();
         $filesToEncrypt = $this->getFilesToEncrypt();
+        if (empty($filesToEncrypt)) {
+            return;
+        }
+        $progressBar = (new ProgressBarBuilder($this->output))->build();
         $progressBar->setMessage('<info>Starting encrypt files...</info>', 'status');
         foreach ($progressBar->iterate($filesToEncrypt) as $fileToEncrypt) {
             $progressBar->setMessage('<info>Encrypting file ' . $fileToEncrypt . '</info>', 'status');
@@ -55,6 +58,9 @@ final class EncryptAndPushNotesCommand extends BaseSyncCommand
     private function temporaryDecryptFiles(): void
     {
         $encryptedFiles = $this->scanEncryptedFilesRecursive();
+        if (empty($encryptedFiles)) {
+            return;
+        }
         $progressBar = (new ProgressBarBuilder($this->output))->build();
         $progressBar->setMessage('<info>Starting...</info>', 'status');
         foreach ($progressBar->iterate($encryptedFiles) as $encryptedFile) {
@@ -72,6 +78,9 @@ final class EncryptAndPushNotesCommand extends BaseSyncCommand
     private function getFilesToEncrypt(): array
     {
         $decryptedFiles = $this->scanDecryptedFilesRecursive();
+        if (empty($decryptedFiles)) {
+            return [];
+        }
         $filesToEncrypt = [];
         $progressBar = (new ProgressBarBuilder($this->output))->build();
         $progressBar->setMessage('<info>Starting...</info>', 'status');
